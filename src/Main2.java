@@ -31,15 +31,15 @@ public class Main2 {
 
         while (true) {
             if (maxLenght - 1 == minLenght) {
-                System.out.println(minLenght);
+                System.out.println(maxLenght);
                 return;
             }
 
             int check = (maxLenght + minLenght) / 2;
             Map<Integer, List<Route>> routesClone = new HashMap<Integer,List<Route>>(routes);
-            routesClone.forEach((key, value) -> value.removeIf(route -> route.getLength() <= check));
+            routesClone.forEach((key, value) -> value.removeIf(route -> route.getLength() <= check)); //некорректно удаляет маршруты
             int newStates = statesCount(citiesNum, routesClone);
-            if (newStates < oldStates) {
+            if (newStates > oldStates) {
                 maxLenght -= maxLenght - check;
             } else {
                 minLenght += check - minLenght;
@@ -73,7 +73,7 @@ public class Main2 {
         }
     }
 
-    static int statesCount(int citiesNum, Map<Integer, List<Route>> map) {
+    static int statesCount(int citiesNum, Map<Integer, List<Route>> map) { //тут неверный подсчет
         int count = 0;
         Set<Integer> citiesIndices = IntStream.rangeClosed(1 , citiesNum).boxed().collect(Collectors.toSet());
         Queue<Integer> queue = new ArrayDeque<>();
@@ -99,3 +99,14 @@ public class Main2 {
         return count;
     }
 }
+/*
+8 8
+1 2 10
+2 3 15
+3 4 20
+4 1 25
+5 6 40
+6 6 20
+7 8 10
+8 7 50
+ */
