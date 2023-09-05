@@ -30,3 +30,46 @@ public class Task_1 {
  *
  * Выведите одно натуральное число — суммарные расходы Кости на интернет.
  */
+
+
+//        Scanner scanner = new Scanner(System.in);
+//        int sum = scanner.nextInt();
+//        int arraySize = scanner.nextInt();
+//        int[] denominations = new int[arraySize * 2];
+//
+//        for (int i = 0; i < arraySize * 2; i = i + 2) {
+//            denominations[i] = scanner.nextInt();
+//            denominations[i + 1] = denominations[i];
+//        }
+//
+//        StringBuilder result = new StringBuilder();
+//        int currentSum = sum;
+//        for (int i = denominations.length - 1; i >= 0; i--) {
+//            if (denominations[i] > currentSum)
+//                continue;
+//
+//            currentSum -= denominations[i];
+//
+//        }
+//
+//
+//        for (int i = 0; i < denominations.length + 1; i++) {
+//
+//        }
+//
+//
+//        //размер массива до 10 чисел  //до 20 купюр //попарно купюры %2  1 1 3 3 6 6
+//
+//
+//        System.out.println("кол-во номиналы");
+//
+//        System.out.println(-1);
+//    }
+
+//    int sum(int[] array, int currentSum, String result) {
+//        for (int i = ; i < array.length + 1; i++) {
+//            ;
+//        }
+//
+//        return 0;
+//    }
