@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Main2 {
+public class Task_5_0923 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int citiesNum = scanner.nextInt();
@@ -73,34 +73,39 @@ public class Main2 {
     }
 
     static int statesCount(int citiesNum, Map<Integer, List<Route>> map) { //тут неверный подсчет
-        int count = 0;
-        Set<Integer> citiesIndices = IntStream.rangeClosed(1, citiesNum).boxed().collect(Collectors.toSet());
-        Queue<Integer> queue = new ArrayDeque<>();
 
-        while (!citiesIndices.isEmpty()) {
-            queue.add(citiesIndices.iterator().next()); //что если первый элеемент является конечной точкой. от него не идет пути, но идет к нему
-            citiesIndices.remove(queue.peek());
-            while (!queue.isEmpty()) {
-                List<Route> list = map.get(queue.poll());
-                if (list != null) {
-                    list.forEach(x -> {
-                        if (citiesIndices.contains(x.getTo())) {
-                            queue.add(x.getTo());
-                        }
-                        citiesIndices.remove(x.getTo());
-                    });
-                }
-            }
-            count++;
+        Map<Integer, List<Integer>> connections = new HashMap<>();
+        for (int i = 1; i <= citiesNum; i++) {
+            connections.put(i, new ArrayList<>());
         }
-        return count;
+        for (Map.Entry<Integer, List<Route>> entry: map.entrySet()) {
+            for (Route route: entry.getValue()) {
+                int from = entry.getKey();
+                int to = route.getTo();
+                connections.get(from).add(to);
+                connections.get(to).add(from);
+            }
+        }
+
+        List<Integer> forRemove = new ArrayList<>();
+        for (Map.Entry<Integer, List<Integer>> entry: connections.entrySet()){
+            if (!forRemove.contains(entry.getKey())) {
+                forRemove.addAll(entry.getValue());
+            }
+        }
+
+        for (Integer num: forRemove) {
+            connections.remove(num);
+        }
+
+        return connections.size();
     }
 }
 /*
 8 9
-1 2 15
-2 3 10
-3 4 20
+1 2 17
+2 3 25
+3 4 30
 4 1 25
 4 3 60
 5 6 40
