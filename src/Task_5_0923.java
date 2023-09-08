@@ -1,6 +1,4 @@
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Task_5_0923 {
     public static void main(String[] args) {
@@ -19,7 +17,8 @@ public class Task_5_0923 {
 
             int to = scanner.nextInt();
             int length = scanner.nextInt();
-            routes.get(from).add(new Route(to, length));
+            if (to != from) //убираем дороги из города в тот же самый город. случай,когда ВСЕ дроги такие, невозможен по условию
+                routes.get(from).add(new Route(to, length));
 
             if (length > maxLength)
                 maxLength = length;
@@ -40,12 +39,10 @@ public class Task_5_0923 {
             for (Map.Entry<Integer, List<Route>> entry : routes.entrySet()) {
                 routesClone.put(entry.getKey(), new ArrayList<>(entry.getValue()));
             }
+            routesClone.forEach((key, value) -> value.removeIf(route -> route.getLength() <= check));
 
-            routesClone.forEach((key, value) -> value.removeIf(route -> {
-                System.out.println(route.getLength() + " <= " + check + " = " + (route.getLength() <= check));
-                return route.getLength() <= check;
-            }));
             int newStates = statesCount(citiesNum, routesClone);
+
             if (newStates > oldStates) {
                 maxLength = check - 1;
             } else {
@@ -72,25 +69,30 @@ public class Task_5_0923 {
         }
     }
 
-    static int statesCount(int citiesNum, Map<Integer, List<Route>> map) { //тут неверный подсчет
+    static int statesCount(int citiesNum, Map<Integer, List<Route>> map) {
 
-        Map<Integer, List<Integer>> connections = new HashMap<>();
+        Map<Integer, Set<Integer>> connections = new HashMap<>();
         for (int i = 1; i <= citiesNum; i++) {
-            connections.put(i, new ArrayList<>());
+            connections.put(i, new HashSet<>());
         }
+
+        //город - [все города, в которые из него можно попасть, включая самого себя]
         for (Map.Entry<Integer, List<Route>> entry: map.entrySet()) {
             for (Route route: entry.getValue()) {
                 int from = entry.getKey();
                 int to = route.getTo();
+                connections.get(from).addAll(connections.get(to));
                 connections.get(from).add(to);
+                connections.get(to).addAll(connections.get(from));
                 connections.get(to).add(from);
             }
         }
 
-        List<Integer> forRemove = new ArrayList<>();
-        for (Map.Entry<Integer, List<Integer>> entry: connections.entrySet()){
+        Set<Integer> forRemove = new HashSet<>();
+        for (Map.Entry<Integer, Set<Integer>> entry: connections.entrySet()){
             if (!forRemove.contains(entry.getKey())) {
                 forRemove.addAll(entry.getValue());
+                forRemove.remove(entry.getKey()); //убираем из списка номер города from
             }
         }
 
@@ -102,6 +104,7 @@ public class Task_5_0923 {
     }
 }
 /*
+ответ 24
 8 9
 1 2 17
 2 3 25
@@ -113,7 +116,18 @@ public class Task_5_0923 {
 7 8 10
 8 7 50
 
+ответ 19
 2 2
 1 2 20
 2 1 5
+
+ответ 4
+5 7
+1 2 5
+1 1 2
+3 4 4
+2 3 7
+3 3 20
+4 1 10
+5 5 100
  */
