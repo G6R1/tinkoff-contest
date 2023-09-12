@@ -6,7 +6,6 @@ public class Task_4_0923 {
         int sum = scanner.nextInt();
         int arraySize = scanner.nextInt();
         int arraySizeX2 = arraySize * 2;
-        //нормальный массив?
         int[][] matrix = new int[arraySize * 2][arraySize * 2];
         //допустим, входные данные отсортированы. если нет, сначала сортируем массив, а потом преобразуем в матрицу
 
@@ -21,22 +20,8 @@ public class Task_4_0923 {
         }
         System.out.println(Arrays.deepToString(matrix).replace("], ", "]\n"));
 
-        //размер массива до 10 чисел  //до 20 купюр //попарно купюры %2  1 1 3 3 6 6
-
-        int[][] testMatrix = new int[6][6];
-        for (int i = 0; i < testMatrix.length; i++) {
-            for (int j = 0; j < testMatrix.length; j++) {
-                testMatrix[i][j] = i + j;
-            }
-        }
-        System.out.println(Arrays.deepToString(testMatrix).replace("], ", "]\n"));
-
-        int[][] newMatrix = remoteLineAndColumn(testMatrix, 5, 0);
-        System.out.println(Arrays.deepToString(newMatrix).replace("], ", "]\n"));
-
-
         List<Integer> result = new ArrayList<>();
-        inDepth(matrix, 0, sum, result);
+        recursSumSearch(matrix, 0, sum, result);
 
         if (result.size() != 0) {
             System.out.println(result.size());
@@ -48,29 +33,32 @@ public class Task_4_0923 {
         }
     }
 
-    private static void inDepth(int[][] matrix, int startValue, int sum, List<Integer> result) { //пустой массив, если ответа нет
+    private static void recursSumSearch(int[][] matrix, int startValue, int sum, List<Integer> result) {
 
-
-        for (int j = 0; j < matrix.length; j++) {
             for (int i = 0; i < matrix.length; i++) {
+                int checkSum = 0;
+                for(Integer integer: result)
+                    checkSum += integer;
+                if (checkSum == sum)
+                    return;
 
+                int stVlTest = startValue;
+                int TZTest = matrix[i][0];
+                System.out.println(Arrays.deepToString(matrix).replace("], ", "]\n"));
 
-
-                if (startValue + matrix[i][j] > sum) {
+                if (startValue + matrix[i][0] > sum) {
                     result.clear();
                     break;
-                } else if (startValue + matrix[i][j] == sum) {
-                    result.add(matrix[i][j]);
-                    break;
-                } else if (startValue + matrix[i][j] < sum) {
-                    result.add(matrix[i][j]);
-                    inDepth(remoteLineAndColumn(matrix, i, j), startValue + matrix[i][j], sum, result);
+                } else if (startValue + matrix[i][0] == sum) {
+                    result.add(matrix[i][0]);
+                    return;
+                } else if (startValue + matrix[i][0] < sum) {
+                    result.add(matrix[i][0]);
+                    recursSumSearch(remoteLineAndColumn(matrix, i, 0), startValue + matrix[i][0], sum, result);
                 }
-
-                
-
             }
-        }
+
+
     }
 
     private static int[][] remoteLineAndColumn(int[][] matrix, int line, int column) { //отсчет line и column с нуля
@@ -99,4 +87,10 @@ public class Task_4_0923 {
 
 5 4
 1 2 3 6
+
+24 4
+1 2 3 6
+
+5 3
+1 2 3
  */
