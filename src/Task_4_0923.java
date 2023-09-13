@@ -6,12 +6,11 @@ public class Task_4_0923 {
         int sum = scanner.nextInt();
         int arraySize = scanner.nextInt();
         int arraySizeX2 = arraySize * 2;
-        int[][] matrix = new int[arraySize * 2][arraySize * 2];
-        //допустим, входные данные отсортированы. если нет, сначала сортируем массив, а потом преобразуем в матрицу
+        int[][] matrix = new int[arraySizeX2][arraySizeX2];
 
-        for (int i = 0; i < arraySizeX2; i = i + 2) {
+        for (int i = 0; i < arraySizeX2; i += 2) {
             int value = scanner.nextInt();
-            for (int j = 0; j < arraySizeX2; j = j + 2) {
+            for (int j = 0; j < arraySizeX2; j += 2) {
                 matrix[i][j] = value;
                 matrix[i][j + 1] = value;
                 matrix[i + 1][j] = value;
@@ -41,11 +40,6 @@ public class Task_4_0923 {
                     checkSum += integer;
                 if (checkSum == sum)
                     return;
-
-                int stVlTest = startValue;
-                int TZTest = matrix[i][0];
-                System.out.println(Arrays.deepToString(matrix).replace("], ", "]\n"));
-
                 if (startValue + matrix[i][0] > sum) {
                     result.clear();
                     break;
