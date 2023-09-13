@@ -50,7 +50,7 @@ public class Task_4_0923 {
                     recursSumSearch(remoteLineAndColumn(matrix, i, 0), startValue + matrix[i][0], sum, result);
                 }
             }
-
+            result.clear();
 
     }
 
