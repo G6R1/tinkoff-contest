@@ -17,7 +17,6 @@ public class Task_4_0923 {
                 matrix[i + 1][j + 1] = value;
             }
         }
-        System.out.println(Arrays.deepToString(matrix).replace("], ", "]\n"));
 
         List<Integer> result = new ArrayList<>();
         recursSumSearch(matrix, 0, sum, result);
