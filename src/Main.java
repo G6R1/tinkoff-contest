@@ -1,9 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println(fibonacci(0));
-        System.out.println(fibonacci(1));
-        System.out.println(fibonacci(2));
-        System.out.println(fibonacci(5));
+        Class<? extends Integer> cl = int.class;
 
 
     }
