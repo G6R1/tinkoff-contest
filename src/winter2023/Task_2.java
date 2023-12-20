@@ -10,9 +10,7 @@ public class Task_2 {
 
         for (int i = 0; i < sets; i++) {
             int developers = scanner.nextInt();
-            //int[] socialities = new int[developers];
             for (int j = 0; j < developers; j++) {
-                //socialities[j] = scanner.nextInt();
                 additionalConnections += scanner.nextInt() - 1;
             }
 
